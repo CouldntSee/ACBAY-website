@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACBAY Technologies - Off-Grid Smart Storage for Filipino Farmers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Plus Jakarta Sans', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        acbay: {
+                            dark: '#064E3B',
+                            primary: '#059669',
+                            light: '#10B981',
+                            accent: '#F59E0B',
+                            warm: '#D97706',
+                            cream: '#F0FDF4',
+                            offwhite: '#FAFAF9',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.6s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #059669;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #047857;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-white {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #059669 0%, #D97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Carousel Styles */
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        /* Organic Shape Background */
+        .organic-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        /* Image Placeholder Styling */
+        .img-placeholder {
+            background: linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
+            border: 2px dashed #059669;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #059669;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        .img-placeholder::before {
+            content: '📷 Replace with your image';
+            font-size: 0.9rem;
+        }
+        .img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Navigation blur on scroll */
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-acbay-offwhite text-gray-800 antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-acbay-primary to-acbay-warm rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">A</span>
+                    </div>
+                    <span class="text-2xl font-bold font-heading text-gray-900">ACBAY</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#problem" class="text-gray-700 hover:text-acbay-primary font-medium transition">The Problem</a>
+                    <a href="#solution" class="text-gray-700 hover:text-acbay-primary font-medium transition">Solution</a>
+                    <a href="#technology" class="text-gray-700 hover:text-acbay-primary font-medium transition">Technology</a>
+                    <a href="#impact" class="text-gray-700 hover:text-acbay-primary font-medium transition">Impact</a>
+                    <a href="#partner" class="px-6 py-2.5 bg-acbay-primary text-white rounded-full font-semibold hover:bg-acbay-dark transition shadow-lg hover:shadow-xl">Partner With Us</a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-acbay-cream via-white to-acbay-cream pt-20">
+        <!-- Organic Background Shapes -->
+        <div class="organic-shape w-96 h-96 bg-acbay-primary/20 -top-20 -left-20 animate-pulse-slow"></div>
+        <div class="organic-shape w-80 h-80 bg-acbay-warm/20 bottom-20 right-10 animate-pulse-slow" style="animation-delay: 1s;"></div>
+        <div class="organic-shape w-64 h-64 bg-acbay-light/20 top-1/2 right-1/3 animate-pulse-slow" style="animation-delay: 2s;"></div>
+
+        <!-- Decorative Grid Pattern -->
+        <div class="absolute inset-0 opacity-30">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="hero-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#059669" stroke-width="0.5"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#hero-grid)" />
+            </svg>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="space-y-8 reveal active">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-acbay-primary/20 shadow-sm">
+                        <span class="w-2 h-2 bg-acbay-warm rounded-full mr-2 animate-pulse"></span>
+                        <span class="text-sm font-semibold text-acbay-dark">Young Farmers Challenge 2024 Finalist</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-gray-900">
+                        Protecting Harvests.<br>
+                        <span class="gradient-text">Empowering Farmers.</span><br>
+                        <span class="text-3xl md:text-4xl lg:text-5xl text-gray-700">Zero Internet Required.</span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-600 leading-relaxed max-w-xl">
+                        ACBAY Technologies delivers affordable, off-grid, AI-driven smart storage monitoring to marginalized Filipino farmers. Eliminate post-harvest losses—no signal needed.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <a href="#partner" class="inline-flex justify-center items-center px-8 py-4 rounded-full bg-gradient-to-r from-acbay-primary to-acbay-light text-white font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all">
+                            Partner With Us
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                        <a href="#impact" class="inline-flex justify-center items-center px-8 py-4 rounded-full bg-white text-acbay-primary font-bold text-lg border-2 border-acbay-primary/30 hover:bg-acbay-cream transition-all">
+                            View Our Impact
+                        </a>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="pt-8 border-t border-gray-200">
+                        <p class="text-sm text-gray-500 mb-4">Trusted by forward-thinking organizations</p>
+                        <div class="flex flex-wrap gap-6 items-center opacity-60">
+                            <div class="h-8 w-24 bg-gray-300 rounded"></div>
+                            <div class="h-8 w-20 bg-gray-300 rounded"></div>
+                            <div class="h-8 w-28 bg-gray-300 rounded"></div>
+                            <div class="h-8 w-24 bg-gray-300 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual -->
+                <div class="relative lg:h-[600px] flex items-center justify-center reveal">
+                    <!-- Main Image Container -->
+                    <div class="relative w-full max-w-lg aspect-square">
+                        <div class="absolute inset-0 bg-gradient-to-br from-acbay-primary/20 to-acbay-warm/20 rounded-3xl transform rotate-6"></div>
+                        <div class="absolute inset-0 glass rounded-3xl overflow-hidden shadow-2xl">
+                            <!-- REPLACE THIS DIV WITH YOUR IMAGE -->
+                            <div class="img-placeholder w-full h-full">
+                                <!-- <img src="your-image.jpg" alt="Farmer using ACBAY technology"> -->
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Stats Card -->
+                        <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-6 animate-float">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-acbay-primary/10 rounded-full flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-acbay-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-bold text-gray-900">15%</p>
+                                    <p class="text-sm text-gray-500">Loss Reduction</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Floating Tech Badge -->
+                        <div class="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl p-4 animate-float" style="animation-delay: 0.5s;">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-10 h-10 bg-acbay-warm/10 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-acbay-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Power</p>
+                                    <p class="text-sm font-bold text-gray-900">100% Solar</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-acbay-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <!-- The Problem Section -->
+    <section id="problem" class="relative py-24 bg-white overflow-hidden">
+        <div class="organic-shape w-96 h-96 bg-red-400/10 top-0 right-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="inline-block px-4 py-1 rounded-full bg-red-100 text-red-700 font-semibold text-sm mb-6">
+                        The Challenge
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        The Silent Thief of Filipino <span class="text-red-600">Harvests</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                        Every year, Philippine smallholder farmers lose up to <span class="font-bold text-red-600">15% of their harvest</span> to spoilage, pests, and improper storage. For marginalized farming families, this isn't just a statistic—it's the difference between turning a profit and falling into debt.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-red-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-gray-700">Traditional cold storage is too expensive for small farmers</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-red-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-gray-700">Existing IoT solutions require stable internet and power</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-red-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-gray-700">Remote, off-grid communities are completely left behind</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="relative reveal">
+                    <div class="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+                        <!-- REPLACE WITH YOUR IMAGE -->
+                        <div class="img-placeholder w-full h-full">
+                            <!-- <img src="problem-image.jpg" alt="Farmer facing post-harvest losses"> -->
+                        </div>
+                    </div>
+                    <!-- Stats Overlay -->
+                    <div class="absolute -bottom-6 -right-6 bg-red-600 text-white rounded-2xl p-6 shadow-xl">
+                        <p class="text-4xl font-bold">15B</p>
+                        <p class="text-sm opacity-90">Annual losses nationwide</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="relative py-24 bg-gradient-to-b from-acbay-cream to-white overflow-hidden">
+        <div class="organic-shape w-96 h-96 bg-acbay-primary/10 bottom-0 left-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <div class="inline-block px-4 py-1 rounded-full bg-acbay-primary/10 text-acbay-primary font-semibold text-sm mb-6">
+                    Our Solution
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Deep Tech, Grassroots Impact
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Plug-and-Play Protection that works where others can't
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow reveal group">
+                    <div class="w-14 h-14 bg-gradient-to-br from-acbay-primary to-acbay-light rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">100% Off-Grid</h3>
+                    <p class="text-gray-600">Powered by solar and long-range LoRa communication. Works where cell signals don't.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow reveal group" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 bg-gradient-to-br from-acbay-warm to-acbay-accent rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Zero Internet Required</h3>
+                    <p class="text-gray-600">Edge AI processes data locally. No cloud dependency, no monthly data fees.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow reveal group" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Farmer-Friendly</h3>
+                    <p class="text-gray-600">No technical skills required. Simple alerts tell farmers exactly what to do.</p>
+                </div>
+            </div>
+
+            <!-- Product Showcase -->
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="p-8 lg:p-12 flex flex-col justify-center">
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4">The ACBAY Smart Monitor</h3>
+                        <p class="text-gray-600 mb-6">Our compact, rugged device continuously monitors temperature and humidity in crop storage facilities, using TinyML to predict and prevent spoilage before it happens.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 bg-acbay-primary/10 rounded-full flex items-center justify-center mr-3">
+                                    <svg class="w-4 h-4 text-acbay-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-gray-700">ESP32 + LoRa Technology</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 bg-acbay-primary/10 rounded-full flex items-center justify-center mr-3">
+                                    <svg class="w-4 h-4 text-acbay-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-gray-700">Solar-Powered (72hr battery backup)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 bg-acbay-primary/10 rounded-full flex items-center justify-center mr-3">
+                                    <svg class="w-4 h-4 text-acbay-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-gray-700">Under ₱3,500 per unit</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative bg-acbay-cream p-8 flex items-center justify-center">
+                        <div class="w-full max-w-sm aspect-square rounded-2xl overflow-hidden shadow-lg">
+                            <!-- REPLACE WITH PRODUCT IMAGE -->
+                            <div class="img-placeholder w-full h-full">
+                                <!-- <img src="product.jpg" alt="ACBAY Smart Monitor Device"> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Carousel Section -->
+    <section id="technology" class="relative py-24 bg-gray-900 text-white overflow-hidden">
+        <div class="organic-shape w-96 h-96 bg-acbay-primary/20 top-0 left-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <div class="inline-block px-4 py-1 rounded-full bg-acbay-primary/20 text-acbay-light font-semibold text-sm mb-6">
+                    How It Works
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Technology That Adapts to Farmers
+                </h2>
+            </div>
+
+            <!-- Carousel Container -->
+            <div class="relative reveal">
+                <div class="overflow-hidden rounded-3xl">
+                    <div id="carouselTrack" class="carousel-track">
+                        <!-- Slide 1 -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                                <div>
+                                    <div class="w-16 h-16 bg-acbay-primary/20 rounded-2xl flex items-center justify-center mb-6">
+                                        <svg class="w-8 h-8 text-acbay-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                                    </div>
+                                    <h3 class="text-3xl font-bold mb-4">Edge AI (TinyML)</h3>
+                                    <p class="text-gray-300 mb-6">Our machine learning models run directly on the device, analyzing temperature and humidity patterns to predict spoilage without needing internet connectivity.</p>
+                                    <ul class="space-y-2 text-gray-400">
+                                        <li>• Local data processing</li>
+                                        <li>• Real-time predictions</li>
+                                        <li>• No cloud dependency</li>
+                                    </ul>
+                                </div>
+                                <div class="aspect-video rounded-2xl overflow-hidden bg-gray-700">
+                                    <!-- REPLACE WITH TECH DIAGRAM/IMAGE -->
+                                    <div class="img-placeholder w-full h-full">
+                                        <!-- <img src="edge-ai.jpg" alt="Edge AI Technology"> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                                <div class="order-2 lg:order-1">
+                                    <div class="aspect-video rounded-2xl overflow-hidden bg-gray-700">
+                                        <!-- REPLACE WITH TECH DIAGRAM/IMAGE -->
+                                        <div class="img-placeholder w-full h-full">
+                                            <!-- <img src="lora-tech.jpg" alt="LoRa Communication"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-1 lg:order-2">
+                                    <div class="w-16 h-16 bg-acbay-warm/20 rounded-2xl flex items-center justify-center mb-6">
+                                        <svg class="w-8 h-8 text-acbay-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path></svg>
+                                    </div>
+                                    <h3 class="text-3xl font-bold mb-4">Long-Range LoRa</h3>
+                                    <p class="text-gray-300 mb-6">LoRa (Long Range) radio technology enables communication across kilometers of rough terrain, perfect for remote farming communities.</p>
+                                    <ul class="space-y-2 text-gray-400">
+                                        <li>• 5-10km range in rural areas</li>
+                                        <li>• Ultra-low power consumption</li>
+                                        <li>• Penetrates obstacles</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                                <div>
+                                    <div class="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mb-6">
+                                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                    </div>
+                                    <h3 class="text-3xl font-bold mb-4">Solar Power System</h3>
+                                    <p class="text-gray-300 mb-6">Integrated solar panels with battery backup ensure continuous operation even during cloudy days and power outages.</p>
+                                    <ul class="space-y-2 text-gray-400">
+                                        <li>• 72-hour battery backup</li>
+                                        <li>• Weather-resistant design</li>
+                                        <li>• Zero electricity costs</li>
+                                    </ul>
+                                </div>
+                                <div class="aspect-video rounded-2xl overflow-hidden bg-gray-700">
+                                    <!-- REPLACE WITH TECH DIAGRAM/IMAGE -->
+                                    <div class="img-placeholder w-full h-full">
+                                        <!-- <img src="solar-system.jpg" alt="Solar Power System"> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Controls -->
+                <button id="carouselPrev" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition backdrop-blur">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button id="carouselNext" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition backdrop-blur">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+
+                <!-- Carousel Dots -->
+                <div class="flex justify-center mt-8 space-x-3">
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-acbay-primary transition-all" data-index="0"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-white/30 transition-all" data-index="1"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-white/30 transition-all" data-index="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact & Scalability Section -->
+    <section id="impact" class="relative py-24 bg-white overflow-hidden">
+        <div class="organic-shape w-96 h-96 bg-acbay-primary/10 top-0 right-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <div class="inline-block px-4 py-1 rounded-full bg-acbay-primary/10 text-acbay-primary font-semibold text-sm mb-6">
+                    Scalability & Impact
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    From Barangay to Nationwide
+                </h2>
+            </div>
+
+            <!-- Roadmap -->
+            <div class="relative mb-20 reveal">
+                <div class="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-acbay-primary to-acbay-warm transform -translate-y-1/2"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="relative bg-white rounded-2xl p-8 shadow-lg border-2 border-acbay-primary/20">
+                        <div class="w-12 h-12 bg-acbay-primary text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 relative z-10">1</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Pilot & Prove</h3>
+                        <p class="text-gray-600">Deploying in partner cooperatives to calibrate TinyML models and prove post-harvest loss reduction.</p>
+                    </div>
+
+                    <div class="relative bg-white rounded-2xl p-8 shadow-lg border-2 border-acbay-warm/20">
+                        <div class="w-12 h-12 bg-acbay-warm text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 relative z-10">2</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">LGU Integration</h3>
+                        <p class="text-gray-600">Onboarding Local Government Units and cooperatives to subsidize units for farmers.</p>
+                    </div>
+
+                    <div class="relative bg-white rounded-2xl p-8 shadow-lg border-2 border-blue-500/20">
+                        <div class="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 relative z-10">3</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">National Scale</h3>
+                        <p class="text-gray-600">Nationwide network of off-grid data nodes for real-time crop storage health monitoring.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Stats -->
+            <div class="bg-gradient-to-br from-acbay-primary to-acbay-dark rounded-3xl p-8 md:p-12 text-white shadow-2xl reveal">
+                <h3 class="text-3xl font-bold text-center mb-12">The ACBAY Economic Impact</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="text-4xl md:text-5xl font-extrabold text-acbay-accent mb-2">&lt;3,500</div>
+                        <p class="text-emerald-100 text-sm">Hardware Cost Per Unit</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl md:text-5xl font-extrabold text-acbay-accent mb-2">15%</div>
+                        <p class="text-emerald-100 text-sm">Loss Reduction Target</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl md:text-5xl font-extrabold text-acbay-accent mb-2">100%</div>
+                        <p class="text-emerald-100 text-sm">Off-Grid Capability</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl md:text-5xl font-extrabold text-acbay-accent mb-2">4x</div>
+                        <p class="text-emerald-100 text-sm">ROI (₱1k saves ₱4k)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial Carousel -->
+            <div class="mt-20 reveal">
+                <h3 class="text-2xl font-bold text-center mb-10">What Partners Say</h3>
+                <div class="relative max-w-4xl mx-auto">
+                    <div id="testimonialTrack" class="carousel-track">
+                        <div class="min-w-full px-4">
+                            <div class="bg-acbay-cream rounded-2xl p-8 text-center">
+                                <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden">
+                                    <!-- REPLACE WITH TESTIMONIAL IMAGE -->
+                                    <div class="img-placeholder w-full h-full rounded-full" style="border-radius: 50%;">
+                                        <!-- <img src="testimonial1.jpg" alt="Partner"> -->
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 text-lg mb-4 italic">"ACBAY's technology has transformed how we monitor our rice storage. The off-grid capability is a game-changer for our remote farming communities."</p>
+                                <p class="font-bold text-gray-900">Maria Santos</p>
+                                <p class="text-sm text-gray-500">President, Laguna Farmers Cooperative</p>
+                            </div>
+                        </div>
+                        <div class="min-w-full px-4">
+                            <div class="bg-acbay-cream rounded-2xl p-8 text-center">
+                                <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden">
+                                    <!-- REPLACE WITH TESTIMONIAL IMAGE -->
+                                    <div class="img-placeholder w-full h-full rounded-full" style="border-radius: 50%;">
+                                        <!-- <img src="testimonial2.jpg" alt="Partner"> -->
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 text-lg mb-4 italic">"Finally, a solution designed specifically for Filipino farmers. The simplicity and affordability make it accessible to even the smallest producers."</p>
+                                <p class="font-bold text-gray-900">Juan Dela Cruz</p>
+                                <p class="text-sm text-gray-500">Agricultural Officer, DA Region IV</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner With Us Section -->
+    <section id="partner" class="relative py-24 bg-gradient-to-br from-acbay-cream via-white to-acbay-cream overflow-hidden">
+        <div class="organic-shape w-96 h-96 bg-acbay-warm/10 bottom-0 left-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="inline-block px-4 py-1 rounded-full bg-acbay-warm/10 text-acbay-warm font-semibold text-sm mb-6">
+                        Get Involved
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                        Let's Secure the Future of Philippine Agriculture
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Whether you're an LGU, cooperative, investor, or farmer, there's a place for you in the ACBAY mission.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-acbay-primary/10 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                                <svg class="w-6 h-6 text-acbay-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">For LGUs & Cooperatives</h3>
+                                <p class="text-gray-600 text-sm">Request a pilot deployment for your farming community</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-acbay-warm/10 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                                <svg class="w-6 h-6 text-acbay-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">For Impact Investors</h3>
+                                <p class="text-gray-600 text-sm">Download our pitch deck and investment opportunities</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">For YFC Judges & Media</h3>
+                                <p class="text-gray-600 text-sm">Contact the founder directly for inquiries</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h3>
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-acbay-primary focus:border-transparent transition" placeholder="Juan Dela Cruz">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-acbay-primary focus:border-transparent transition" placeholder="juan@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Organization Type</label>
+                                <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-acbay-primary focus:border-transparent transition">
+                                    <option>LGU / Government</option>
+                                    <option>Farmer Cooperative</option>
+                                    <option>Impact Investor</option>
+                                    <option>Research Institution</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-acbay-primary focus:border-transparent transition" placeholder="Tell us about your interest..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-4 bg-gradient-to-r from-acbay-primary to-acbay-light text-white font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-acbay-primary to-acbay-warm rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-xl">A</span>
+                        </div>
+                        <span class="text-2xl font-bold font-heading">ACBAY Technologies</span>
+                    </div>
+                    <p class="text-gray-400 mb-4 max-w-sm">Augmented Computer Bridge Agrarian Yield - Democratizing agricultural technology for marginalized Filipino farmers.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-acbay-primary transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-acbay-primary transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#problem" class="hover:text-acbay-primary transition">The Problem</a></li>
+                        <li><a href="#solution" class="hover:text-acbay-primary transition">Our Solution</a></li>
+                        <li><a href="#technology" class="hover:text-acbay-primary transition">Technology</a></li>
+                        <li><a href="#impact" class="hover:text-acbay-primary transition">Impact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>hello@acbaytech.ph</li>
+                        <li>Philippines</li>
+                        <li class="pt-2">
+                            <a href="#partner" class="text-acbay-primary hover:underline">Partner With Us →</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm">&copy; 2024 ACBAY Technologies. All rights reserved.</p>
+                <p class="text-gray-600 text-sm mt-2 md:mt-0">Young Farmers Challenge Applicant</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+                navbar.classList.remove('bg-transparent', 'py-4');
+                navbar.classList.add('py-2');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+                navbar.classList.add('bg-transparent', 'py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+            
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Trigger once on load
+
+        // Carousel Functionality
+        class Carousel {
+            constructor(trackId, prevBtnId, nextBtnId, dotClass) {
+                this.track = document.getElementById(trackId);
+                this.prevBtn = document.getElementById(prevBtnId);
+                this.nextBtn = document.getElementById(nextBtnId);
+                this.dots = document.querySelectorAll(dotClass);
+                this.currentIndex = 0;
+                this.slides = this.track.children;
+                this.totalSlides = this.slides.length;
+                
+                this.init();
+            }
+            
+            init() {
+                this.updateCarousel();
+                
+                this.prevBtn.addEventListener('click', () => this.prev());
+                this.nextBtn.addEventListener('click', () => this.next());
+                
+                this.dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => this.goToSlide(index));
+                });
+                
+                // Auto-play
+                setInterval(() => this.next(), 6000);
+            }
+            
+            updateCarousel() {
+                const offset = -this.currentIndex * 100;
+                this.track.style.transform = `translateX(${offset}%)`;
+                
+                this.dots.forEach((dot, index) => {
+                    if (index === this.currentIndex) {
+                        dot.classList.remove('bg-white/30');
+                        dot.classList.add('bg-acbay-primary');
+                    } else {
+                        dot.classList.remove('bg-acbay-primary');
+                        dot.classList.add('bg-white/30');
+                    }
+                });
+            }
+            
+            next() {
+                this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+                this.updateCarousel();
+            }
+            
+            prev() {
+                this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+                this.updateCarousel();
+            }
+            
+            goToSlide(index) {
+                this.currentIndex = index;
+                this.updateCarousel();
+            }
+        }
+
+        // Initialize carousels
+        if (document.getElementById('carouselTrack')) {
+            new Carousel('carouselTrack', 'carouselPrev', 'carouselNext', '.carousel-dot');
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        // Add mobile menu functionality here if needed
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
